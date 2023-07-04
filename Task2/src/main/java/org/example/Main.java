@@ -9,7 +9,7 @@ import java.util.Collection;
 public class Main {
     public static void main(String[] args) throws IOException {
         String input = readInput();
-        Collection<SumCounter> sumCounters = SumCounterEvaluator.evaluate(13, input);
+        Collection<OperandCounter> sumCounters = Evaluator.evaluate(13, input);
         sumCounters.forEach(System.out::println);
     }
 
