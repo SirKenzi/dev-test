@@ -1,22 +1,24 @@
 package org.example;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-
-import java.util.*;
 
 /**
  * Represents the amount of times each operand had been provided.
  * These operands represent a unique pair of operands that result in a given sum.
  */
-@RequiredArgsConstructor(access= AccessLevel.PRIVATE)
-public class SumCounter {
+@RequiredArgsConstructor
+public class OperandCounter implements Comparable<OperandCounter>{
 
-    private final OperandPair operandPair;
+    private final Integer operand;
+    private final Integer sum;
 
     private int counterA;
     private int counterB;
     private boolean switcher;
+
+    public Integer getOperand() {
+        return operand;
+    }
 
     public int getCounterA() {
         return counterA;
@@ -27,16 +29,16 @@ public class SumCounter {
     }
 
     public void increase(int operand){
-        if( operandPair.operandA().equals(operandPair.operandB())) {
+        if( (this.getOperand() * 2) == sum) {
             if( switcher){
                 counterA++;
             } else {
                 counterB++;
             }
             switcher = !switcher;
-        } else if (operandPair.operandA()  == operand){
+        } else if (getOperand().equals(operand)){
             counterA++;
-        } else if (operandPair.operandB() == operand){
+        } else{
             counterB++;
         }
     }
@@ -54,17 +56,23 @@ public class SumCounter {
         int max = Math.max(counterA, counterB);
         StringBuilder result = new StringBuilder();
         for( int i = 0; i < max; i++ ){
-            result.append(operandPair.operandA()).append(" ").append(operandPair.operandB()).append("\n");
+            result.append(getOperand()).append(" ").append(sum-getOperand()).append("\n");
         }
         return result.toString();
     }
 
-    public static Map<OperandPair, SumCounter> generate(int n){
-        Map<OperandPair, SumCounter> sums = new HashMap<>();
-        for( int i = 0; i <= n/2; i++){
-            OperandPair operandPair = new OperandPair(i, n-i);
-            sums.put(operandPair, new SumCounter(operandPair));
-        }
-        return sums;
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int compareTo(OperandCounter o) {
+        return this.getOperand().compareTo(o.getOperand());
     }
 }
